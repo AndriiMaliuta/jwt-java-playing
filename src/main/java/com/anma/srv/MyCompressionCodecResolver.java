@@ -1,4 +1,4 @@
-package com.anma;
+package com.anma.srv;
 
 import io.jsonwebtoken.CompressionCodec;
 import io.jsonwebtoken.CompressionCodecResolver;

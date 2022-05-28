@@ -1,5 +1,7 @@
 package com.anma;
 
+import com.anma.res.CatController;
+import com.anma.res.CatControllerImpl;
 import io.javalin.Javalin;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,8 +12,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 
+import static io.javalin.apibuilder.ApiBuilder.*;
 public class JwtCore {
     public static void main(String[] args) {
+
+        CatController catController = new CatControllerImpl();
 
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         String jwt1 = Jwts.builder()
@@ -25,6 +30,17 @@ public class JwtCore {
         System.out.println(jwt1);
 
         Javalin app = Javalin.create().start(7000);
-        app.get("/", ctx -> ctx.result("Hello World"));
+        app.get("/", ctx ->
+                ctx.header("JWT", jwt1)
+                        .status(200)
+                        .result("Hello World"));
+        app.routes(() -> {
+           path("cats", () -> {
+               get(catController::getCats);
+               path("{name}", () -> {
+                   get(catController::getByName);
+               });
+           });
+        });
     }
 }

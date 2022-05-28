@@ -8,11 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Properties;
 
 public class JwtTest1 {
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -32,7 +35,10 @@ public class JwtTest1 {
     @Test
     void createJwt() {
         try {
-            final String KEY = "aasd87sdfhkh7uhfksdflhnfhfhwirfhnisbul7hdsssfv";
+            Properties props = new Properties();
+            props.load(Files.newInputStream(Path.of("src/main/resources/app.properties")));
+
+            final String KEY = props.getProperty("JWT.secret");
             String header = "{\"alg\":\"HS256\"}";
             String claims = "{\"sub\":\"Petro\"}";
             String encodedHeader = Base64.getEncoder().encodeToString(header.getBytes("UTF-8"));

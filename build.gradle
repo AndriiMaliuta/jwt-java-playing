@@ -19,6 +19,7 @@ dependencies {
     //io.jsonwebtoken:jjwt-gson - Gson
     //io.jsonwebtoken:jjwt-orgjson - JSON-Java
     implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.31'
+    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.12.RELEASE'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
