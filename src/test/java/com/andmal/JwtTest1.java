@@ -8,11 +8,13 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
 import java.security.Key;
+import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.util.Base64;
 
 public class JwtTest1 {
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256); //or RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512
 
     @Test
     void checkJwt() {
@@ -53,4 +55,13 @@ public class JwtTest1 {
         System.out.println(key.getEncoded());
         System.out.println(key.getFormat());
     }
+
+    @Test
+    void checkKeyPair() {
+        KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256);
+        //or RS384, RS512, PS256, PS384, PS512, ES256, ES384, ES512
+        System.out.println(keyPair);
+
+    }
+
 }
