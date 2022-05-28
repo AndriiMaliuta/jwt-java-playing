@@ -6,6 +6,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 
 public class JwtCore {
     public static void main(String[] args) {
@@ -13,7 +16,11 @@ public class JwtCore {
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
         String jwt1 = Jwts.builder()
                 .setSubject("Petro")
-                .signWith(key).compact();
+                .setAudience("leute")
+                .setExpiration(Date.from(LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.UTC)))
+                .setHeaderParam("kid", "12345")
+                .signWith(key)
+                .compact();
 
         System.out.println(jwt1);
 

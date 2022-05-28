@@ -1,16 +1,18 @@
 package com.andmal;
 
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.Test;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.util.Base64;
+import java.util.Date;
 
 public class JwtTest1 {
     Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
@@ -38,7 +40,7 @@ public class JwtTest1 {
             String concat = encodedHeader + "." + encodedClaims;
 //            byte[] signature = hmacSha256(concat, key);
             byte[] signature = Keys.hmacShaKeyFor(KEY.getBytes()).getEncoded();
-            String jws = concat + '.' + Base64.getEncoder().encodeToString(signature);
+            String jws = concat + '.' + Encoders.BASE64.encode(signature);
 
             System.out.println(jws);
 
@@ -63,5 +65,6 @@ public class JwtTest1 {
         System.out.println(keyPair);
 
     }
+
 
 }
